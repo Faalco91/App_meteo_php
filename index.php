@@ -96,11 +96,11 @@ function getWeather($emoji){
                 $lat = $apiData["coord"]["lat"];
                 $long = $apiData["coord"]["lon"];
                 $date = date("Y-m-d");
-                $current_time = date("H:i");
+                $current_time = date("H:i", strtotime($current_time));
                 $sunrise = $apiData["sys"]["sunrise"];
-                $sunrise_date = date("H:i", $sunrise);
+                $sunrise_date = date("H:i", strtotime($sunrise));
                 $sunset = $apiData["sys"]["sunset"];
-                $sunset_date = date("H:i", $sunset);
+                $sunset_date = date("H:i", strtotime($sunset));
 
                 echo "<script>console.log($lat, $long)</script>";
 
@@ -169,11 +169,12 @@ function getWeather($emoji){
                 $weather_name_day5 = getWeather($emoji_day5);
                 $weather_name_day6 = getWeather($emoji_day6);
 
-                if ($current_time >= $sunset_date && $current_time <= $sunrise_date) {
+                if (($current_time >= $sunset_date) && ($current_time <= $sunrise_date)) {
                     $current_emoji = $night_emoji;
                 } else {
                     $current_emoji = $emoji_day0;
                 }
+                
 
                 
             } else {
@@ -230,8 +231,8 @@ function getWeather($emoji){
 
             <section class="weatherOfDay-container">
 
-                <form method="post" class="nav-bar-container" id="weatherForm">
-                    <input type="text" name="city" class="nav-bar" value="<?php echo $city;?>">
+                <form method="post" class="nav-bar-container" id="cityForm">
+                    <input type="text" name="city" class="nav-bar" value="<?php echo $city;?>" autofocus>
                     <input type="submit" name="submit" class="submit-city">
                     <p class="message-error"><?php echo $error_msg ?></p>
                 </form>
@@ -364,7 +365,7 @@ function getWeather($emoji){
 
         </div>
         <script>
-            document.getElementById("weatherForm").submit();
+            document.getElementById("cityForm").submit();
         </script>
     </body>
 </html>
