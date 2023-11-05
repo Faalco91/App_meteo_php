@@ -26,6 +26,8 @@
     $sunrise_emoji = "🌅";
     $sunset_emoji = "🌇";
 
+    $city = "Paris";
+
 
 function getEmoji($weather){
     switch($weather){
@@ -75,10 +77,6 @@ function getWeather($emoji){
 
 
     if(isset($_POST["submit"])){
-
-        if(empty($_POST["city"])){
-            echo "Search for cities.";
-        } else {
 
             $city = $_POST["city"];
             $api_key = "39ed47471842ab055457f850a1690cf4";
@@ -190,7 +188,7 @@ function getWeather($emoji){
 
             echo "<script> console.log($res) </script>";
 
-        } 
+        
     }
 ?>
 
@@ -232,8 +230,8 @@ function getWeather($emoji){
 
             <section class="weatherOfDay-container">
 
-                <form method="post" class="nav-bar-container">
-                    <input type="text" name="city" class="nav-bar" value=<?php echo $city; ?>>
+                <form method="post" class="nav-bar-container" id="weatherForm">
+                    <input type="text" name="city" class="nav-bar" value="<?php echo $city;?>">
                     <input type="submit" name="submit" class="submit-city">
                     <p class="message-error"><?php echo $error_msg ?></p>
                 </form>
@@ -365,5 +363,8 @@ function getWeather($emoji){
             </section>
 
         </div>
+        <script>
+            document.getElementById("weatherForm").submit();
+        </script>
     </body>
 </html>
